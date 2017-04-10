@@ -1,0 +1,67 @@
+---
+title: "STRUCTURE Set-up and Analysis"
+output: html_notebook
+---
+
+###Preparation for Analysis
+* `Structure_AllFoxes.txt` is the input file for STRUCTURE that you generated from PGDSpyder
+* Download STRUCTURE v. 2.3.4: http://web.stanford.edu/group/pritchardlab/structure_software/release_versions/v2.3.4/html/structure.html  
+* Citation: Pritchard, J. K., Stephens, M. & Donnelly, P. Inference of population structure using multilocus genotype data. Genetics 155, 945–959 (2000).
+* Documentation for STRUCTURE here: http://web.stanford.edu/group/pritchardlab/structure_software/release_versions/v2.3.4/structure_doc.pdf
+  * Helpful tutorial for STRUCTURE found here: http://pbgworks.org/sites/pbgworks.org/files/Tutorial%20of%20STRUCTURE%20software.pdf  
+* To perform STRUCTURE analysis, you need the number of individuals and the number of SNPs in your dataset. To calculate these values:
+```{r}
+
+```
+
+  
+##STRUCTURE Set-up
+1. Create a new project  
+
+<img src="/Users/jessicajudson/Desktop/ClassProject/STRUCTURE_Analysis/STRUCTURE/NewProject.png" width="350">  
+
+2. Step 1: Specify project name, the directory you want to work in, and the file containing the data for your analysis (`Structure_AllFoxes.txt`)  
+
+<img src="/Users/jessicajudson/Desktop/ClassProject/STRUCTURE_Analysis/STRUCTURE/Step1_SetUp.png" width="350">  
+
+3. Step 2: Fill in the number of individuals, the ploidy of your SNPs (2), the number of SNPs, and the missing data value (in PGDSpyder, the STRUCTURE format output uses -9)  
+
+<img src="/Users/jessicajudson/Desktop/ClassProject/STRUCTURE_Analysis/STRUCTURE/Step2_SetUp.png" width="350">  
+
+4. Step 3: Indicate that your file has a row of marker names  
+
+<img src="/Users/jessicajudson/Desktop/ClassProject/STRUCTURE_Analysis/STRUCTURE/Step3_SetUp.png" width="350">  
+
+5. Step 4: Indicate that your file has individual ID for each individual, and putative population origin for each individual (since you know which island each fox is from)
+
+<img src="/Users/jessicajudson/Desktop/ClassProject/STRUCTURE_Analysis/STRUCTURE/Step4_SetUp.png" width="350">  
+
+6. Your final settings should look like this:  
+
+<img src="/Users/jessicajudson/Desktop/ClassProject/STRUCTURE_Analysis/STRUCTURE/FinalSettings.png" width="350"> 
+
+7. Create a new parameter setting for your STRUCTURE run:  
+
+<img src="/Users/jessicajudson/Desktop/ClassProject/STRUCTURE_Analysis/STRUCTURE/NewParameters.png" width="350">  
+
+**Original specifications of STRUCTURE run from Funk et al. 2016: MCMC burn-in of 100,000 steps followed by 100,000 steps for inference of clustering, used the admixture model with correlated allele frequencies.** We used a much reduced run to see if we could pull out the same results, with a burn-in of 1000 and 1000 reps after the burn-in, with all other settings the same.  
+
+8. Fill in the appropriate burn-in and reps values:  
+
+<img src="/Users/jessicajudson/Desktop/ClassProject/STRUCTURE_Analysis/STRUCTURE/burnin.png" width="350">  
+
+9. Set the Ancestry and Allele settings:  
+
+<img src="/Users/jessicajudson/Desktop/ClassProject/STRUCTURE_Analysis/STRUCTURE/AncestrySettings.png" width="350">   
+<img src="/Users/jessicajudson/Desktop/ClassProject/STRUCTURE_Analysis/STRUCTURE/AlleleSettings.png" width="350"> 
+
+10. Go to the Project tab and choose "Start a job". Select your created parameter set, and **set the value of K from 1 to 10 with 10 replicates for each value of K, as in Funk et al. 2016**.  
+
+<img src="/Users/jessicajudson/Desktop/ClassProject/STRUCTURE_Analysis/STRUCTURE/StartJob.png" width="350">  
+
+###Results will be placed in your directory that you specified for the project.  
+
+##Viewing STRUCTURE plots within STRUCTURE
+* Click on the results file on the left-hand side of the screen to see all of the runs for each K. You can view the resulting plots by clicking a specified run, select **Bar Plot** and show. A Bar Plot of one run from K=7 is below:  
+
+<img src="/Users/jessicajudson/Desktop/ClassProject/STRUCTURE_Analysis/STRUCTURE/Results_K_7_Structure.jpg" width="800">  
