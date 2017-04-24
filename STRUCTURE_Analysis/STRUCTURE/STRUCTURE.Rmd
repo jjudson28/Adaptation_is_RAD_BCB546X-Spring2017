@@ -11,7 +11,11 @@ output: html_notebook
   * Helpful tutorial for STRUCTURE found here: http://pbgworks.org/sites/pbgworks.org/files/Tutorial%20of%20STRUCTURE%20software.pdf  
 * To perform STRUCTURE analysis, you need the number of individuals and the number of SNPs in your dataset. To calculate these values:
 ```{r}
-
+setwd("~/Desktop/ClassProject/STRUCTURE_Analysis/STRUCTURE")
+allfoxes <- read.table("Structure_AllFoxes.txt", header = TRUE, sep="\t", stringsAsFactors = FALSE) #read in Structure-formatted file from PGDSpyder output
+length(unique(allfoxes$X)) #count number of individuals in dataset
+allfoxesspace_delimited <- read.table("Structure_AllFoxes.txt", header = TRUE, sep=" ", stringsAsFactors = FALSE) #change to space delimited to get the number of loci
+ncol(allfoxesspace_delimited) #count the number of SNP loci in the dataset
 ```
 
   
