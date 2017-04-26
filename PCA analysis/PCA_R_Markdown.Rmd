@@ -1,0 +1,108 @@
+---
+title: "PCA for Adaptation is RAD"
+output: html_notebook
+---
+
+Funk WC, Lovich RE, Hohenlohe PA, Hofman CA, Morrison SA, Sillett TS, Ghalambor CK, Maldonado JE, Rick TC, Day MD, Polato NR, Fizpatrick SW, Coonan TJ, Crooks KR, Dillon A, Garcelon DK, King JL, Boser CL, Gould N, Andelt WF (2016) Data from: Adaptive divergence despite strong genetic drift: genomic analysis of the evolutionary mechanisms causing genetic differentiation in the island fox (Urocyon littoralis). Dryad Digital Repository. 
+
+RAD sequencing data for 6 populations of island foxes (Urocyon littoralis) and 1 population of mainland gray foxes (Urocyon cinereoargenteus)
+
+- for details on sample preparation and analysis see
+Funk et al. (2016) Adaptive divergence despite strong genetic drift: genomic analysis of the evolutionary mechanisms causing genetic differentiation in the island fox (Urocyon littoralis).  Molecular Ecology, in press.
+- final manuscript and other information available at:
+http://wp.natsci.colostate.edu/funklab/w-chris-funk/publications/
+
+Files:
+
+1) Sample data (fox_sample_data.csv)
+-- CSV file with locality data for each individual included in analysis.
+
+
+2) Raw Data (grays.tar.gz, smi.tar.gz, sri.tar.gz, sci.tar.gz, sca.tar.gz, scl.tar.gz, sni.tar.gz)
+-- 7 tar.gz folders of reads in fastq format, one population per folder.  These have been sorted by barcode into individuals and filtered for quality using the Stacks component process_radtags.pl.  For 8 individuals (5 from San Nicolas Island and 3 from San Clemente Island), there is a file of forward reads and one of reverse reads (pairs in the same order).  For the remaining 192 individuals, there is one file of forward reads. Populations are as follows (see Funk et al. 2016 for more information):
+
+- grays = gray foxes from the mainland of southern California
+- smi = San Miguel Island island foxes
+- sri = Santa Rosa Island island foxes
+- sci = Santa Cruz Island island foxes
+- sca = Santa Catalina Island island foxes
+- scl = San Clemente Island island foxes
+- sni = San Nicolas Island island foxes
+
+
+3) RAD contigs (final_contigs.fa)
+-- One fasta file of 126,264 contigs, one assembled at each RAD locus as described in Funk et al. (2016).  Genotypes at SNPs were based on alignments of raw reads (files above) to this reference.  Contig names provide the RAD locus ID from Stacks analysis and the length of the contig.
+
+
+4) SNP genotypes (GP_with_grays.txt and GP_NO_grays.txt)
+-- These 2 Genepop input files give SNP genotypes with vs. without gray foxes included (see Funk et al. 2016 for details).  The first row is a file description, followed by locus (contig names) for variable loci remaining after filters, followed by genotypes for each individual. Allelic states are coded as: A = 1, C = 2, G = 3, T = 4. Some individuals were removed due to low coverage.
+
+Individuals included in "GP_with_grays.txt":
+- grays (individuals gray_1, gray_3-13, gray_15-18)
+- smi (individuals smi_1-15, smi_17-19, smi_21, smi_23-24)
+- sri (individuals sri_1-23)
+- sci (individuals sci_1-24)
+- sca (individuals sca-w_1-9, sca-w_11-18, sca-w_20-24, sca-e_1-10, sca-e_12-22)
+- scl (individuals scl_2-4, scl_6-19)
+- sni (individuals sni-redeye_1-20, sni-redeye_22-24, sni-skyline_1-10, sni-skyline_12-22)
+
+Individuals included in "GP_NO_grays.txt":
+- smi (individuals smi_1-19, smi_21, smi_23-24)
+- sri (individuals sri_1-23)
+- sci (individuals sci_1-24)
+- sca (individuals sca-w_1-9, sca-w_11-18, sca-w_20-24, sca-e_1-22)
+- scl (individuals scl_2-19)
+- sni (individuals sni-redeye_1-20, sni-redeye_22-24, sni-skyline_1-10, sni-skyline_12-22)
+
+```{r}
+??prcomp
+??read.loci
+```
+
+
+```{r}
+no_grey_fox <- read.genepop("no_greyfoxes.gen", onerowperind = FALSE, col.pop = TRUE,)
+no_grey_fox
+```
+```{r}
+no_grey_fox_2 <- read.delim2(file = "no_greyfoxes.txt")
+```
+
+
+```{r}
+no_grey_fox_PCA <- prcomp(no_grey_fox)
+```
+
+```{r}
+no_grey_matrix <- as.matrix(no_grey_fox)
+```
+
+```{r}
+no_grey_fox_PCA <- prcomp(no_grey_matrix)
+```
+
+```{r}
+library(adegenet)
+library(ggplot2)
+library(reshape2)
+
+fox <- read.structure("nogreyfoxes.stru", n.ind = 175, onerowperind = FALSE, n.loc = 5293, col.pop = 2, row.marknames = 1, col.lab = 0)
+
+fox2 <- import2genind("nogreyfoxes.stru")
+View(fox2)
+
+fox_df <- genind2df(fox)
+X <- tab(fox) #changes genind object into data matrix
+x <- scaleGen(fox, center = FALSE, scale = FALSE, NA.method = "asis") 
+y <- prcomp(t(x), center = TRUE, scale = FALSE)
+d <- data.frame(y$x)
+ggplot(d, aes(x = PC1, y = PC3)) + geom_point()
+```
+
+
+```{r}
+library(scatterplot3d)
+library(rgl)
+foxes <-read.table(file = "allfoxes.txt", header=TRUE)
+```
+
