@@ -1,0 +1,45 @@
+---
+title: "PGDSpyder Instructions"
+output: html_notebook
+---
+
+##Retrieve the file for PGDSpyder to use from the Dryad repository for Funk et al. 2016
+```{bash}
+curl http://datadryad.org/bitstream/handle/10255/dryad.109500/GP_with_grays.txt?sequence=1 --output allfoxes.txt #used to get the info off the dryad
+```
+
+###Take a look at the file to use for this analysis, allfoxes.txt
+```{r}
+setwd("~/Desktop/ClassProject/PGDSpyder")
+allfoxes <- read.table("allfoxes.txt", header = FALSE, sep="\t", stringsAsFactors = FALSE)
+head(allfoxes)
+colnames(allfoxes)
+str(allfoxes)
+```
+
+###Create a variable that contains a dataframe of only the SNP names and one that contains only the individuals and genotypes to get a better idea of the dataset
+```{r}
+SNP_names <- as.data.frame(allfoxes[2:4859,])
+Individual_genotypes <- as.data.frame(allfoxes[4860:5054,])
+str(SNP_names)
+str(Individual_genotypes)
+```
+
+#We used PGDSpider to convert GenePop to Structure format  
+* http://www.cmpg.unibe.ch/software/PGDSpider/PGDSpider%20manual_vers%202-1-1-0.pdf  
+* Citation: Lischer HEL and Excoffier L (2012) PGDSpider: An automated data conversion tool for connecting population genetics and genomics programs. Bioinformatics 28: 298-299. 
+
+##To launch PGDSpider:  
+1. Download the program here: http://www.cmpg.unibe.ch/software/PGDSpider/  
+2. Launch the program using the following unix line:  
+```{bash}
+java -Xmx1024m -Xms512m -jar PGDSpider2.jar
+```
+
+##Settings to convert using PGDSpider:
+Data input file: GENEPOP format;  allfoxes.txt  
+Data output file: STRUCTURE format; STRUCTURE_AllFoxes.txt  
+GENEPOP: Select the type of data: SNP  
+STRUCTURE: FastSTRUCTURE format? No; Intermarker distance? No  
+
+<img src="/Users/jessicajudson/Desktop/ClassProject/STRUCTURE_Analysis/PGDSpyder/PGDSpyder_GUI.png" width="1000">

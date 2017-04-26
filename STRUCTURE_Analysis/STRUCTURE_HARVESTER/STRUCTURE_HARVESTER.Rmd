@@ -1,0 +1,32 @@
+---
+title: "Analyzing Structure Results with STRUCTURE HARVESTER"
+output: html_notebook
+---
+
+#Set-up for STRUCTURE HARVESTER
+
+* The program is an online interface found here: http://taylor0.biology.ucla.edu/structureHarvester/  
+
+* Citation: Earl, Dent A. and vonHoldt, Bridgett M. (2012) STRUCTURE HARVESTER: a website and program for visualizing STRUCTURE output and implementing the Evanno method. Conservation Genetics Resources vol. 4 (2) pp. 359-361 doi: 10.1007/s12686-011-9548-7  
+
+
+###STRUCTURE HARVESTER requires you to zip the directory with all of your STRUCTURE results before analyzing:
+```{bash}
+#first, navigate to directory that holds your structure results
+zip -r StructureResults.zip DirectoryName #need to fill in directory name with your appropriate STRUCTURE directory
+```
+
+###Browse for your zipped file and click harvest:  
+
+<img src="/Users/jessicajudson/Desktop/ClassProject/Structure_Analysis/STRUCTURE_HARVESTER/Interface.png" width="800">
+
+#Results!
+**Funk et al. 2016 inferred the best-supported value of K using mean LnP(K) and the delta K method**  
+
+* For the delta K method, Funk et al. 2016 found that two groups was most supported in the data. They suggest that is an underestimate based on other results. Our results are in agreement:  
+
+<img src="/Users/jessicajudson/Desktop/ClassProject/Structure_Analysis/STRUCTURE_HARVESTER/deltaK.png" width="800">  
+
+* For the LnP(K) method, Funk et al. 2016 found that seven groups was most supported in the data. They suggest that is an overestimate, since there are only six distinct groupings of color and one of the seven groups is a mix of two others. Our results are in slight disagreement. We got that 5 groups was most supported, likely due to our reduced simulations and burn-in period:  
+
+<img src="/Users/jessicajudson/Desktop/ClassProject/Structure_Analysis/STRUCTURE_HARVESTER/lnPK.png" width="800"> 
