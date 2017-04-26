@@ -54,55 +54,30 @@ Individuals included in "GP_NO_grays.txt":
 - scl (individuals scl_2-19)
 - sni (individuals sni-redeye_1-20, sni-redeye_22-24, sni-skyline_1-10, sni-skyline_12-22)
 
-```{r}
-??prcomp
-??read.loci
-```
+
+Genepop input file manipulation in UNIX: 
+
+
+
+
+
+
 
 
 ```{r}
-no_grey_fox <- read.genepop("no_greyfoxes.gen", onerowperind = FALSE, col.pop = TRUE,)
-no_grey_fox
-```
-```{r}
-no_grey_fox_2 <- read.delim2(file = "no_greyfoxes.txt")
-```
-
-
-```{r}
-no_grey_fox_PCA <- prcomp(no_grey_fox)
-```
-
-```{r}
-no_grey_matrix <- as.matrix(no_grey_fox)
+allfoxes <- read.table(file = "foxes_goodfile.txt", header = FALSE)
+pops_grey <- allfoxes[,1]
+grey_foxes_pca <- prcomp(allfoxes[,2:4859], scale = TRUE)
+gf_pc_scores <- data.frame(grey_foxes_pca$x)
+ggplot(gf_pc_scores) + geom_point(aes(x = PC1, y = PC3, colour = pops_grey)) + coord_equal() 
 ```
 
 ```{r}
-no_grey_fox_PCA <- prcomp(no_grey_matrix)
-```
-
-```{r}
-library(adegenet)
-library(ggplot2)
-library(reshape2)
-
-fox <- read.structure("nogreyfoxes.stru", n.ind = 175, onerowperind = FALSE, n.loc = 5293, col.pop = 2, row.marknames = 1, col.lab = 0)
-
-fox2 <- import2genind("nogreyfoxes.stru")
-View(fox2)
-
-fox_df <- genind2df(fox)
-X <- tab(fox) #changes genind object into data matrix
-x <- scaleGen(fox, center = FALSE, scale = FALSE, NA.method = "asis") 
-y <- prcomp(t(x), center = TRUE, scale = FALSE)
-d <- data.frame(y$x)
-ggplot(d, aes(x = PC1, y = PC3)) + geom_point()
-```
-
-
-```{r}
-library(scatterplot3d)
-library(rgl)
-foxes <-read.table(file = "allfoxes.txt", header=TRUE)
+nogrey_foxes <- read.table(file = "no_gray_foxes_goodfile.txt", header = FALSE)
+pops_ng <- nogrey_foxes[,1]
+ng_foxes_pca <- prcomp(nogrey_foxes[,2:5294], scale = TRUE)
+ngf_pc_scores <- data.frame(ng_foxes_pca$x)
+nogreyplot <- ggplot(ngf_pc_scores) + geom_point(aes(x = PC1, y = PC3, colour = pops_ng)) + coord_equal()
+nogreyplot + scale_color_brewer(palette = "Dark2")
 ```
 
