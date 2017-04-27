@@ -6,10 +6,15 @@
 3. PCA Analysis
 4. Structure_Analysis
 
+##Files within this repository include:
+1. Final_project_546.pdf
+
 ##For original files from Funk et al. 2016 and original README, see FunkFiles_Paper
 
 ##To recreate PCA plots, see PCA_R_Markdown.rmd in PCA Analysis.
 
 ##To recreate Structure Analysis, see README in Structure_Analysis
 
-##To recreate Fst values, see 
+##To recreate Fst values, see Fst_README in Fst_Analysis
+
+##For presentation slides see Final_project_546.pdf
