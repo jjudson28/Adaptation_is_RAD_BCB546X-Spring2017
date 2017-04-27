@@ -63,12 +63,14 @@ grep -E 'grey|smi|sri|sci|sca|scl|sni' nogreyfoxesnoSNPstab.txt > nogreyfoxesnoS
 
 ## Generating PCA plots in R
 ```{r}
+
 allfoxes <- read.table(file = "foxes_goodfile.txt", header = FALSE) #load in file as a table
 pops_grey <- allfoxes[,1] # subsets population data 
 grey_foxes_pca <- prcomp(allfoxes[,2:4859], scale = TRUE) # runs PCA function on the subsetted data 
 summary(grey_foxes_pca) # gives you stats for all of the componets and the percentage that each componet contributes to variation 
 gf_pc_scores <- data.frame(grey_foxes_pca$x) # puts all the principle componets into a dataframe 
-allfoxplot <- ggplot(gf_pc_scores) + geom_point(aes(x = PC1, y = PC3, colour = pops_grey)) + coord_equal() + ggtitle("PCA Plot with Island Populations and Grey Fox") + labs(x = "PC1(18.3%)", y = "PC3(35.3%)") #plot function with ggplot 2 
+allfoxplot <- ggplot(gf_pc_scores) + geom_point(aes(x = PC1, y = PC3, colour = pops_grey)) + coord_equal() + ggtitle("PCA with Island Populations & Grey Fox") + labs(x = "PC1(18.3%)", y = "PC3(35.3%)") + theme(text = element_text(size = 20), panel.border = element_blank(), panel.grid.major = element_blank(),
+panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"), panel.background = element_blank(), legend.key = element_blank()) #plot function with ggplot 2 
 allfoxplot + scale_color_brewer(palette = "Dark2")
 ```
 
@@ -78,7 +80,8 @@ pops_ng <- nogrey_foxes[,1] # subsets population data
 ng_foxes_pca <- prcomp(nogrey_foxes[,2:5294], scale = TRUE) # runs PCA function on the subsetted data 
 summary(ng_foxes_pca) # gives you stats for all of the componets and the percentage that each componet contributes to variation 
 ngf_pc_scores <- data.frame(ng_foxes_pca$x) # puts all the principle componets into a dataframe 
-nogreyplot <- ggplot(ngf_pc_scores) + geom_point(aes(x = PC1, y = PC3, colour = pops_ng)) + coord_equal() + ggtitle("PCA Plot with Island Populations") + labs(x = "PC1(21.1%)", y = "PC3(39.9%)") #plotting function with ggplot2
+nogreyplot <- ggplot(ngf_pc_scores) + geom_point(aes(x = PC1, y = PC3, colour = pops_ng)) + coord_equal() + ggtitle("PCA with Island Populations") + labs(x = "PC1(21.1%)", y = "PC3(39.9%)") + theme(text = element_text(size = 20), panel.border = element_blank(), panel.grid.major = element_blank(),
+panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"), panel.background = element_blank(), legend.key = element_blank()) #plotting function with ggplot2
 nogreyplot + scale_color_brewer(palette = "Dark2")
 ```
 
