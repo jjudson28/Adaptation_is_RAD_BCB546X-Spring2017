@@ -18,3 +18,9 @@
 ##To recreate Fst values, see Fst_README in Fst_Analysis
 
 ##For presentation slides see Final_project_546.pdf
+
+Group Members:
+Nicole Jandick: did Latex slides and helped manage the repository
+Merrit Polomsky: did Fst analyses
+Angela Bunning: did PCA analyses
+Jessica Judson: did STRUCTURE analysis
